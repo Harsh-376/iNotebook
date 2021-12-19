@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import About from "./components/About";
+import NoteState from "./context/note/NoteState";
+import Alert from "./components/Alert";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [alert, setAlert] = useState(null);
+    const adjustAlert = (message, type) => {
+        setAlert({
+            message: message,
+            type: type,
+        });
+        setTimeout(() => {
+            setAlert(null);
+        }, 2000);
+    };
+
+    return (
+        <>
+            <NoteState>
+                <Router>
+                    <Navbar />
+                    <Alert alert={alert} />
+
+                    <div className="container mt-3">
+                        {/* react-router-dom v6 */}
+                        <Routes>
+                            <Route
+                                exact
+                                path="/"
+                                element={<Home adjustAlert={adjustAlert} />}
+                            />
+                            <Route exact path="/about" element={<About />} />
+                            <Route
+                                exact
+                                path="/login"
+                                element={<Login adjustAlert={adjustAlert} />}
+                            />
+                            <Route
+                                exact
+                                path="/signup"
+                                element={<SignUp adjustAlert={adjustAlert} />}
+                            />
+                        </Routes>
+                    </div>
+                </Router>
+            </NoteState>
+        </>
+    );
 }
 
 export default App;
