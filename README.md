@@ -1,3 +1,3 @@
 # inotebook
-created with help from YouTube <br/>
-all files are present in master branch
+Created with help from YouTube <br/>
+All files are present in <b>master</b> branch
